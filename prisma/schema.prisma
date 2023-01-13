@@ -64,3 +64,18 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model BusinessCard {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    name      String
+    email     String
+    imgSrc    String
+    website   String
+    title     String
+    slug    String
+
+    @@unique([slug])
+}

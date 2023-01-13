@@ -1,6 +1,5 @@
 import { FC, Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { HiBookOpen, HiX } from "react-icons/hi";
 import { signOut, useSession } from "next-auth/react";
 
 // interface NavbarProps {}

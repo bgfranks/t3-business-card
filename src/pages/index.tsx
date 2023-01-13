@@ -1,11 +1,27 @@
+import { useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "../utils/api";
 
+import BusinessCard from "../components/business-card/BusinessCard";
+
 const Home: NextPage = () => {
   const { data: session } = useSession();
+
+  const [inputs, setInputs] = useState({
+    title: "",
+    website: "",
+  });
+
+  const { mutate } = api.card.publishCard.useMutation({
+    onSuccess(card) {
+      router.push(`/c/${card.slug}`);
+    },
+  });
+
+  const publish = () => mutate(inputs);
 
   return (
     <>
@@ -22,6 +38,83 @@ const Home: NextPage = () => {
           >
             Sign in with Google
           </button>
+        )}
+
+        {session && (
+          <>
+            <div className="mx-auto max-w-7xl">
+              <h2 className="mb-6 text-left text-center text-3xl font-semibold text-white">
+                Tell us about yourself
+              </h2>
+              <div className="mb-12 grid grid-cols-2 gap-8">
+                {/* Input field 1 */}
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-white"
+                  >
+                    Title
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      value={inputs.title}
+                      onChange={(e) =>
+                        setInputs((prev) => ({
+                          ...prev,
+                          title: e.target.value,
+                        }))
+                      }
+                      type="text"
+                      name="title"
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Software Engineer"
+                    />
+                  </div>
+                </div>
+
+                {/* Input field 2 */}
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-white"
+                  >
+                    Website
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      value={inputs.website}
+                      onChange={(e) =>
+                        setInputs((prev) => ({
+                          ...prev,
+                          website: e.target.value,
+                        }))
+                      }
+                      type="text"
+                      name="website"
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      placeholder="yoursite.com"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* main business card */}
+            <div className="flex flex-col items-center justify-center">
+              <BusinessCard inputs={inputs} />
+            </div>
+
+            {/* Publish Button */}
+            <div className="mt-12 flex justify-center">
+              <button
+                type="button"
+                onClick={publish}
+                className="rounded-full bg-black/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-black/20"
+              >
+                Publish
+              </button>
+            </div>
+          </>
         )}
       </div>
     </>
