@@ -5,6 +5,8 @@ import { SessionProvider } from "next-auth/react";
 import { api } from "../utils/api";
 
 import "../styles/globals.css";
+import "../components/business-card/BusinessCard.css";
+
 import Navbar from "../components/shared/Navbar";
 
 const MyApp: AppType<{ session: Session | null }> = ({
