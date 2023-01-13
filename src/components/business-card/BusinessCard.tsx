@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { FC } from "react";
+import { BusinessCard } from "@prisma/client";
 import { useSession } from "next-auth/react";
 
 interface BusinessCardProps {
@@ -11,6 +13,8 @@ interface BusinessCardProps {
 
 const BusinessCard: FC<BusinessCardProps> = ({ inputs, card }) => {
   const { data: session } = useSession();
+
+  console.log(card, "card");
 
   const front = card
     ? "http://localhost:3000/api/og" +
