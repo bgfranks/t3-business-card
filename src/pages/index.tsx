@@ -6,9 +6,11 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "../utils/api";
 
 import BusinessCard from "../components/business-card/BusinessCard";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   const [inputs, setInputs] = useState({
     title: "",
